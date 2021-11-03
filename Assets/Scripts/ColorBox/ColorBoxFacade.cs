@@ -5,7 +5,7 @@ namespace ColorBox
 {
   public class ColorBoxFacade : MonoBehaviour
   {
-    public ColorBoxFacade[] Neighbor;
+    public ColorBoxFacade[] Neighbors;
     public SpriteRenderer Body;
     public ColorType CurrentColor;
 
@@ -14,13 +14,23 @@ namespace ColorBox
       Body.color = ColorData.Colors[CurrentColor];
     }
 
-    public void ChangeColor(ColorType currentColor)
+    public bool ChangeColor(ColorType currentColor)
     {
       if (CurrentColor == currentColor)
-        return;
+        return false;
 
       CurrentColor = currentColor;
       Body.color = ColorData.Colors[CurrentColor];
+      return true;
+    }
+
+    public bool IsWin()
+    {
+      foreach (ColorBoxFacade neighbor in Neighbors)
+        if (neighbor.CurrentColor == CurrentColor)
+          return false;
+      
+      return true;
     }
   }
 }

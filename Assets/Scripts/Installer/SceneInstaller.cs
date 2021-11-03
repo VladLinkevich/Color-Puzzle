@@ -9,6 +9,7 @@ namespace Installer
     {
       Container.BindInterfacesAndSelfTo<SceneRegistrar>().AsSingle().NonLazy();
       Container.Bind<ColorBoxPainter>().AsSingle().NonLazy();
+      Container.Bind<WinObserver>().AsSingle().NonLazy();
     }
   }
 }

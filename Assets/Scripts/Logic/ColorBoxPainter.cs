@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ColorBox;
 using Data;
-using UnityEngine;
 
 namespace Logic
 {
   public class ColorBoxPainter
   {
+    public event Action ChangeColor;
+    
     private readonly SceneRegistrar _scene;
 
     private ColorType _currentColor = ColorType.Green;
@@ -17,12 +19,12 @@ namespace Logic
     {
       _scene = scene;
 
-      _scene.Complete += GetColorBox;
+      _scene.Complete += GetSceneData;
     }
 
-    private void GetColorBox()
+    private void GetSceneData()
     {
-      _scene.Complete -= GetColorBox;
+      _scene.Complete -= GetSceneData;
       
       SubscribeOnBoxTouch();
       SubscribeOnChangeColor();
@@ -32,7 +34,7 @@ namespace Logic
     {
       _boxes = _scene.GetColorBoxes();
       foreach (ColorBoxFacade box in _boxes) 
-        box.GetComponentInChildren<TouchObserver>().Touch += ChangeColor;
+        box.GetComponentInChildren<TouchObserver>().Touch += ChangeBoxColor;
     }
 
     private void SubscribeOnChangeColor()
@@ -42,8 +44,11 @@ namespace Logic
         button.Click += ChangeCurrentColor;
     }
 
-    private void ChangeColor(TouchObserver trigger) => 
-      trigger.GetComponentInParent<ColorBoxFacade>().ChangeColor(_currentColor);
+    private void ChangeBoxColor(TouchObserver trigger)
+    {
+      if (trigger.GetComponentInParent<ColorBoxFacade>().ChangeColor(_currentColor))
+        ChangeColor?.Invoke();
+    }
 
     private void ChangeCurrentColor(ColorType color) => 
       _currentColor = color;
