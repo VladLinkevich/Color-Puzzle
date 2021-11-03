@@ -8,6 +8,7 @@ namespace Installer
     public override void InstallBindings()
     {
       Container.BindInterfacesAndSelfTo<SceneRegistrar>().AsSingle().NonLazy();
+      Container.Bind<ColorBoxPainter>().AsSingle().NonLazy();
     }
   }
 }
