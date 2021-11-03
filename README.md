@@ -1,1 +1,1 @@
-Download [APK](Color Puzzle\Build) here
+Download [APK](https://github.com/VladLinkevich/Color-Puzzle/tree/master/Build) here
