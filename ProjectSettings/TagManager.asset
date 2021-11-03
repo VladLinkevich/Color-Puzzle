@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ColorBox
+  - ColorChangeButton
   layers:
   - Default
   - TransparentFX
