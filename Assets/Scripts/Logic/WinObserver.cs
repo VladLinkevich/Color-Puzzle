@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ColorBox;
 using UnityEngine;
 
@@ -6,9 +7,11 @@ namespace Logic
 {
   public class WinObserver
   {
+    public event Action Win;
+    
     private readonly SceneRegistrar _scene;
     private readonly ColorBoxPainter _painter;
-
+    
     private List<ColorBoxFacade> _boxes;
 
     public WinObserver(SceneRegistrar scene, ColorBoxPainter painter)
@@ -33,7 +36,7 @@ namespace Logic
         if (box.IsWin() == false)
           return;
 
-      Debug.Log("Win");
+      Win?.Invoke();
     }
   }
 }
