@@ -9,26 +9,49 @@ namespace Logic.GameState
     private const string LevelKey = "level";
     private readonly ILevelLoader _loader;
     private readonly GameStateMachine _stateMachine;
+    private readonly WinObserver _winObserver;
     private readonly StartButton _startButton;
+    private readonly Label _label;
 
     public StartGameState(
       ILevelLoader loader,
       GameStateMachine stateMachine,
-      StartButton startButton)
+      WinObserver winObserver,
+      StartButton startButton,
+      Label label)
     {
       _loader = loader;
       _stateMachine = stateMachine;
+      _winObserver = winObserver;
       _startButton = startButton;
+      _label = label;
     }
 
     public void Enter()
     {
+      _winObserver.Win += ChangeState;
+      
       CreateLevel();
-      InitializeButton();
+      InitializeUI();
     }
 
-    public void Exit() => 
+    private void InitializeUI()
+    {
+      InitializeButton();
+      InitializeLabel();
+    }
+
+    private void InitializeLabel()
+    {
+      _label.gameObject.SetActive(true);
+      _label.Text.text = "Level " + (GetLevel() + 1);
+    }
+
+    public void Exit()
+    {
+      _label.gameObject.SetActive(false);
       _startButton.gameObject.SetActive(false);
+    }
 
     private void InitializeButton()
     {
@@ -44,6 +67,12 @@ namespace Logic.GameState
         level = 0;
       
       return level;
+    }
+
+    private void ChangeState()
+    {
+      _winObserver.Win -= ChangeState;
+      _stateMachine.Enter<WinState>();
     }
 
     private void EnterGameLoop() => 

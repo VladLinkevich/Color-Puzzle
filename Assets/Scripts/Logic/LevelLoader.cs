@@ -19,6 +19,7 @@ namespace Logic
 
     private List<ColorBoxFacade> _colorBoxes;
     private Transform _parent;
+    private GameObject _image;
 
     public List<ColorBoxFacade> ColorBoxes => _colorBoxes;
 
@@ -45,20 +46,28 @@ namespace Logic
 
       _neighborFinder.FindNeighbors(polygons, _colorBoxes);
       
-      CreateImage(renderer.gameObject);
+      _image = CreateImage(renderer.gameObject);
       SetTransform(renderer);
     }
 
     private void Cleanup()
     {
-      for (int i = 0, end = _parent.childCount; i < end; ++i) 
-        Object.Destroy(_parent.GetChild(0).gameObject);
+      if (_colorBoxes == null)
+        return;
+      
+      foreach (ColorBoxFacade box in _colorBoxes) 
+        Object.Destroy(box.gameObject);
+
+      Object.Destroy(_image.gameObject);
+      _colorBoxes.Clear();
     }
 
-    private void CreateImage(GameObject image)
+    private GameObject CreateImage(GameObject image)
     {
       GameObject instantiate = Object.Instantiate(image);
       instantiate.transform.eulerAngles = new Vector3(0, -180, 0);
+
+      return instantiate;
     }
 
     private void SetTransform(SpriteRenderer renderer)
