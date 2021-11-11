@@ -16,7 +16,7 @@ namespace Installer
       Container.Bind<WinObserver>().AsSingle().NonLazy();
       
       Container.Bind<IColorBoxFactory>().To<ColorBoxFactory>().AsSingle().NonLazy();
-      Container.Bind<ISVGParser>().To<IsvgParser>().AsSingle().NonLazy();
+      Container.Bind<ISVGParser>().To<SVGParser>().AsSingle().NonLazy();
 
     }
   }

@@ -40,8 +40,5 @@ namespace Logic
       if (trigger.GetComponentInParent<ColorBoxFacade>().ChangeColor(_currentColor))
         ChangeColor?.Invoke();
     }
-
-    private void ChangeCurrentColor(ColorType color) => 
-      _currentColor = color;
   } 
 }
