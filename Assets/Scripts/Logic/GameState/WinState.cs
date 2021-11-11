@@ -31,6 +31,7 @@ namespace Logic.GameState
     public void Exit()
     {
       _button.Button.onClick.RemoveAllListeners();
+      _button.gameObject.SetActive(false);
       _label.gameObject.SetActive(false);
     }
 
@@ -55,7 +56,10 @@ namespace Logic.GameState
     private void ChangeState() => 
       _stateMachine.Enter<StartGameState>();
 
-    private void SetNewLevel() => 
-      PlayerPrefs.SetInt(LevelKey, PlayerPrefs.GetInt(LevelKey) + 1);
+    private void SetNewLevel()
+    {
+      int level = PlayerPrefs.GetInt(LevelKey);
+      PlayerPrefs.SetInt(LevelKey, level == 2 ? 0 : level + 1);
+    }
   }
 }

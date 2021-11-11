@@ -35,7 +35,7 @@ namespace Logic
     public void LoadLevel(int level)
     {
       Cleanup();
-
+      
       SpriteRenderer renderer = Resources.Load<SpriteRenderer>("Sprite/" + level);
       List<List<Vector2>> polygons = _parser.ToPolygonData(GetPath(level), renderer.sprite.pixelsPerUnit);
       _colorBoxes = new List<ColorBoxFacade>(polygons.Count);
