@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-//using UnityEngine;
+
 
 namespace SVG
 {
-  public class SVGParser
+  public class IsvgParser : ISVGParser
   {
-    public List<List<Vector2>> ToPolygonData()
+    private const int PPU = 256;
+
+    public List<List<Vector2>> ToPolygonData(string path)
     {
       List<List<Vector2>> polygons = new List<List<Vector2>>();
 
-      string data = File.ReadAllText("C:\\Users\\mipro\\Downloads\\Dragonfly.svg");
+      string data = File.ReadAllText(path);
 
       float scale = GetScale(data);
       
@@ -26,18 +28,13 @@ namespace SVG
         string[] vector2Data = polygon.Split(' ');
         List<Vector2> points = new List<Vector2>(vector2Data.Length / 2);
 
-        for (int j = 0, endJ = vector2Data.Length; j < endJ; j += 2)
+        for (int j = 0, endJ = vector2Data.Length - 2; j < endJ; j += 2)
         {
           points.Add(new Vector2(
-            float.Parse(vector2Data[j]) / scale,
-            float.Parse(vector2Data[j + 1]) / scale));
+            float.Parse(vector2Data[j]) / PPU,
+            float.Parse(vector2Data[j + 1]) / PPU));
         }
 
-        foreach (Vector2 point in points)
-        {
-          Debug.Log(point);
-        }
-        
         polygons.Add(points);
       }
 
@@ -50,8 +47,8 @@ namespace SVG
       data = data.Remove(data.IndexOf('"'));
       
       string[] resolution = data.Split(' ');
-      
-      return (Screen.height * 100) / float.Parse(resolution[2]) - float.Parse(resolution[0]);
+
+      return PPU / (float.Parse(resolution[2]) - float.Parse(resolution[0]));
     }
   }
 }

@@ -9,39 +9,30 @@ namespace Logic
   {
     public event Action ChangeColor;
     
-    private readonly SceneRegistrar _scene;
+    private readonly ILevelLoader _level;
 
     private ColorType _currentColor = ColorType.Green;
     private List<ColorBoxFacade> _boxes;
     private List<ChangeColorButton> _buttons;
 
-    public ColorBoxPainter(SceneRegistrar scene)
+    public ColorBoxPainter(ILevelLoader level)
     {
-      _scene = scene;
-
-      _scene.Complete += GetSceneData;
+      _level = level;
+      _level.Complete += GetLevelData;
     }
 
-    private void GetSceneData()
+    private void GetLevelData()
     {
-      _scene.Complete -= GetSceneData;
+      _level.Complete -= GetLevelData;
       
       SubscribeOnBoxTouch();
-      SubscribeOnChangeColor();
     }
 
     private void SubscribeOnBoxTouch()
     {
-      _boxes = _scene.GetColorBoxes();
+      _boxes = _level.ColorBoxes;
       foreach (ColorBoxFacade box in _boxes) 
         box.GetComponentInChildren<TouchObserver>().Touch += ChangeBoxColor;
-    }
-
-    private void SubscribeOnChangeColor()
-    {
-      _buttons = _scene.GetChangeColorButton();
-      foreach (ChangeColorButton button in _buttons) 
-        button.Click += ChangeCurrentColor;
     }
 
     private void ChangeBoxColor(TouchObserver trigger)

@@ -1,5 +1,6 @@
 ﻿using Data;
 using UnityEngine;
+using UnityEngine.U2D;
 
 namespace ColorBox
 {
@@ -7,19 +8,15 @@ namespace ColorBox
   {
     public ColorBoxFacade[] Neighbors;
     public ColorType CurrentColor;
-
-    private void Awake()
-    {
-      //Body.color = ColorData.Colors[CurrentColor];
-    }
-
+    public SpriteShapeRenderer Body;
+    
     public bool ChangeColor(ColorType currentColor)
     {
       if (CurrentColor == currentColor)
         return false;
 
       CurrentColor = currentColor;
-      //Body.color = ColorData.Colors[CurrentColor];
+      Body.color = ColorData.Colors[CurrentColor];
       return true;
     }
 

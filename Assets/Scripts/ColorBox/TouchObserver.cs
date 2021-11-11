@@ -7,10 +7,7 @@ namespace ColorBox
   {
     public event Action<TouchObserver> Touch;
 
-    private void OnMouseDown()
-    {
-      Debug.Log("Touch");
+    private void OnMouseDown() => 
       Touch?.Invoke(this);
-    }
   }
 }

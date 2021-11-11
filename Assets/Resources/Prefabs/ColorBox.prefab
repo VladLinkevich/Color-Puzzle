@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neighbors: []
   CurrentColor: 0
+  Body: {fileID: 6186088298507942071}
 --- !u!1 &5190923632281871098
 GameObject:
   m_ObjectHideFlags: 0
