@@ -15,16 +15,18 @@ namespace Logic
 
     private readonly IColorBoxFactory _boxFactory;
     private readonly ISVGParser _parser;
+    private readonly INeighborFinder _neighborFinder;
 
     private List<ColorBoxFacade> _colorBoxes;
     private Transform _parent;
 
     public List<ColorBoxFacade> ColorBoxes => _colorBoxes;
 
-    public LevelLoader(IColorBoxFactory boxFactory, ISVGParser parser)
+    public LevelLoader(IColorBoxFactory boxFactory, ISVGParser parser, INeighborFinder neighborFinder)
     {
       _boxFactory = boxFactory;
       _parser = parser;
+      _neighborFinder = neighborFinder;
     }
 
     public void Initialize()
@@ -39,11 +41,15 @@ namespace Logic
         _colorBoxes.Add(
           _boxFactory.CreateColorBox(polygon.ToArray(), _parent).GetComponent<ColorBoxFacade>());
 
+      _neighborFinder.FindNeighbors(polygons, _colorBoxes);
+      
       CreateImage(renderer.gameObject);
       SetTransform(renderer);
       
       Complete?.Invoke();
     }
+
+
 
     private void CreateImage(GameObject image)
     {

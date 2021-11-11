@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System.Collections.Generic;
+using Data;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -6,7 +7,7 @@ namespace ColorBox
 {
   public class ColorBoxFacade : MonoBehaviour
   {
-    public ColorBoxFacade[] Neighbors;
+    public List<ColorBoxFacade> Neighbors = new List<ColorBoxFacade>();
     public ColorType CurrentColor;
     public SpriteShapeRenderer Body;
     
@@ -28,5 +29,25 @@ namespace ColorBox
       
       return true;
     }
+
+    public void AddNeighbor(ColorBoxFacade box)
+    {
+      if (ContainsOrThis(box))
+        return;
+      
+      Neighbors.Add(box);
+      box.SaveAddNeighbor(this);
+    }
+
+    private void SaveAddNeighbor(ColorBoxFacade box)
+    {
+      if (ContainsOrThis(box))
+        return;
+      
+      Neighbors.Add(box);
+    }
+
+    private bool ContainsOrThis(ColorBoxFacade box) => 
+      box == this || Neighbors.Contains(box);
   }
 }
