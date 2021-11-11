@@ -51,7 +51,7 @@ namespace SVG
       
       string[] resolution = data.Split(' ');
       
-      return (1920 * 200) / float.Parse(resolution[2]) - float.Parse(resolution[0]);
+      return (Screen.height * 100) / float.Parse(resolution[2]) - float.Parse(resolution[0]);
     }
   }
 }
