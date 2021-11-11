@@ -8,23 +8,26 @@ namespace ColorBox
   public class ColorBoxFacade : MonoBehaviour
   {
     public List<ColorBoxFacade> Neighbors = new List<ColorBoxFacade>();
-    public ColorType CurrentColor;
     public SpriteShapeRenderer Body;
+    
+    private ColorType _currentColor;
     
     public bool ChangeColor(ColorType currentColor)
     {
-      if (CurrentColor == currentColor)
+      if (_currentColor == currentColor)
         return false;
 
-      CurrentColor = currentColor;
-      Body.color = ColorData.Colors[CurrentColor];
+      _currentColor = currentColor;
+      Body.color = ColorData.Colors[_currentColor];
       return true;
     }
 
     public bool IsWin()
     {
+      if (_currentColor == ColorType.White) return false;
+      
       foreach (ColorBoxFacade neighbor in Neighbors)
-        if (neighbor.CurrentColor == CurrentColor)
+        if (neighbor._currentColor == _currentColor)
           return false;
       
       return true;

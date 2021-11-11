@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ColorBox;
 using Data;
+using UI;
 
 namespace Logic
 {
@@ -20,6 +21,9 @@ namespace Logic
       _level = level;
       _level.Complete += GetLevelData;
     }
+
+    public void SetPaintColor(ColorType color) => 
+      _currentColor = color;
 
     private void GetLevelData()
     {

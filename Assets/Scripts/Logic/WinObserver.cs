@@ -11,24 +11,24 @@ namespace Logic
   {
     public event Action Win;
     
-    private readonly SceneRegistrar _scene;
+    private readonly ILevelLoader _level;
     private readonly ColorBoxPainter _painter;
     
     private List<ColorBoxFacade> _boxes;
 
-    public WinObserver(SceneRegistrar scene, ColorBoxPainter painter)
+    public WinObserver(ILevelLoader level, ColorBoxPainter painter)
     {
-      _scene = scene;
+      _level = level;
       _painter = painter;
 
-      _scene.Complete += GetSceneData;
+      _level.Complete += GetSceneData;
       _painter.ChangeColor += CheckWin;
     }
 
     private void GetSceneData()
     {
-      _scene.Complete -= GetSceneData;
-      _boxes = _scene.GetColorBoxes();
+      _level.Complete -= GetSceneData;
+      _boxes = _level.ColorBoxes;
     }
 
     private void CheckWin()
