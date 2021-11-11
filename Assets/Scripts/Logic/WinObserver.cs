@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ColorBox;
-using Unity.VectorGraphics;
-using Unity.VectorGraphics.Editor;
-using UnityEngine;
 
 namespace Logic
 {

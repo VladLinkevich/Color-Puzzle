@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 96ab1f861bbbcba4288fad1ff9fa92d1
+guid: bf7f374d14ee9234ca01e5da9df30b63
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -13,7 +13,7 @@ ScriptedImporter:
   svgPixelsPerUnit: 256
   gradientResolution: 64
   alignment: 0
-  customPivot: {x: 1, y: 1}
+  customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
   viewportOptions: 0
   preserveViewport: 0
@@ -35,21 +35,21 @@ ScriptedImporter:
   filterMode: 1
   sampleCount: 4
   preserveSVGImageAspect: 0
-  useSVGPixelsPerUnit: 1
+  useSVGPixelsPerUnit: 0
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: DragonflySprite
+      name: 
       originalName: 
-      pivot: {x: 1, y: 1}
-      alignment: 9
+      pivot: {x: 0, y: 0}
+      alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1005
-        height: 918
-      spriteID: 1256f0067d5d8fa47a36824bf52606b6
+        width: 0
+        height: 0
+      spriteID: e583af0194e43534e8390ad4a81ca881
       internalID: 0
     PhysicsOutlines: []

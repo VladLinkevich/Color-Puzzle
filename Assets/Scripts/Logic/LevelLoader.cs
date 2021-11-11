@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ColorBox;
 using SVG;
-using Unity.VectorGraphics.Editor;
 using UnityEngine;
-using Zenject;
 using Object = UnityEngine.Object;
 
 namespace Logic
@@ -28,14 +25,14 @@ namespace Logic
       _boxFactory = boxFactory;
       _parser = parser;
       _neighborFinder = neighborFinder;
-      
+
       _parent = new GameObject(ParentName).transform;
     }
 
     public void LoadLevel(int level)
     {
       Cleanup();
-      
+
       SpriteRenderer renderer = Resources.Load<SpriteRenderer>("Sprite/" + level);
       List<List<Vector2>> polygons = _parser.ToPolygonData(GetPath(level), renderer.sprite.pixelsPerUnit);
       _colorBoxes = new List<ColorBoxFacade>(polygons.Count);
@@ -45,7 +42,7 @@ namespace Logic
           _boxFactory.CreateColorBox(polygon.ToArray(), _parent).GetComponent<ColorBoxFacade>());
 
       _neighborFinder.FindNeighbors(polygons, _colorBoxes);
-      
+
       _image = CreateImage(renderer.gameObject);
       SetTransform(renderer);
     }
@@ -54,8 +51,8 @@ namespace Logic
     {
       if (_colorBoxes == null)
         return;
-      
-      foreach (ColorBoxFacade box in _colorBoxes) 
+
+      foreach (ColorBoxFacade box in _colorBoxes)
         Object.Destroy(box.gameObject);
 
       Object.Destroy(_image.gameObject);
@@ -76,7 +73,7 @@ namespace Logic
       _parent.position = new Vector3(renderer.size.x / 2, renderer.size.y / 2, 0);
     }
 
-    private static string GetPath(int level) =>
-      Application.dataPath + "/Resources/Sprite/" + level + ".svg";
+    private string GetPath(int level) =>
+      Application.streamingAssetsPath + "/" + level + ".svg";
   }
 }
