@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Data;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -9,9 +11,12 @@ namespace ColorBox
   {
     public List<ColorBoxFacade> Neighbors = new List<ColorBoxFacade>();
     public SpriteShapeRenderer Body;
+    public Guid ID;
     
     private ColorType _currentColor;
-    
+
+    public ColorType GetColor => _currentColor;
+
     public bool ChangeColor(ColorType currentColor)
     {
       if (_currentColor == currentColor)
@@ -51,6 +56,6 @@ namespace ColorBox
     }
 
     private bool ContainsOrThis(ColorBoxFacade box) => 
-      box == this || Neighbors.Contains(box);
+      box.ID == this.ID || Neighbors.FirstOrDefault((x) => x.ID == box.ID);
   }
 }

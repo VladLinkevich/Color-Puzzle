@@ -41,16 +41,17 @@ namespace Logic.GameState
       InitializeLabel();
     }
 
+    public void Exit()
+    {
+      _startButton.Button.onClick.RemoveAllListeners();
+      _label.gameObject.SetActive(false);
+      _startButton.gameObject.SetActive(false);
+    }
+
     private void InitializeLabel()
     {
       _label.gameObject.SetActive(true);
       _label.Text.text = "Level " + (GetLevel() + 1);
-    }
-
-    public void Exit()
-    {
-      _label.gameObject.SetActive(false);
-      _startButton.gameObject.SetActive(false);
     }
 
     private void InitializeButton()
