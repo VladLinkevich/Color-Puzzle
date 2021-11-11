@@ -9,8 +9,9 @@ using Object = UnityEngine.Object;
 
 namespace Logic
 {
-  public class LevelLoader : IInitializable, ILevelLoader
+  public class LevelLoader : ILevelLoader
   {
+    private const string ParentName = "Map";
     public event Action Complete;
 
     private readonly IColorBoxFactory _boxFactory;
@@ -27,14 +28,16 @@ namespace Logic
       _boxFactory = boxFactory;
       _parser = parser;
       _neighborFinder = neighborFinder;
+      
+      _parent = new GameObject(ParentName).transform;
     }
 
-    public void Initialize()
+    public void LoadLevel(int level)
     {
-      _parent = new GameObject("Map").transform;
+      Cleanup();
 
-      SpriteRenderer renderer = Resources.Load<SpriteRenderer>("Sprite/Dragonfly");
-      List<List<Vector2>> polygons = _parser.ToPolygonData(GetPath(), renderer.sprite.pixelsPerUnit);
+      SpriteRenderer renderer = Resources.Load<SpriteRenderer>("Sprite/" + level);
+      List<List<Vector2>> polygons = _parser.ToPolygonData(GetPath(level), renderer.sprite.pixelsPerUnit);
       _colorBoxes = new List<ColorBoxFacade>(polygons.Count);
 
       foreach (List<Vector2> polygon in polygons)
@@ -49,7 +52,11 @@ namespace Logic
       Complete?.Invoke();
     }
 
-
+    private void Cleanup()
+    {
+      for (int i = 0, end = _parent.childCount; i < end; ++i) 
+        Object.Destroy(_parent.GetChild(0).gameObject);
+    }
 
     private void CreateImage(GameObject image)
     {
@@ -63,7 +70,7 @@ namespace Logic
       _parent.position = new Vector3(renderer.size.x / 2, renderer.size.y / 2, 0);
     }
 
-    private static string GetPath() =>
-      Application.dataPath + "/Resources/Sprite/Dragonfly.svg";
+    private static string GetPath(int level) =>
+      Application.dataPath + "/Resources/Sprite/" + level + ".svg";
   }
 }

@@ -8,5 +8,6 @@ namespace Logic
   {
     event Action Complete;
     List<ColorBoxFacade> ColorBoxes { get; }
+    void LoadLevel(int level);
   }
 }
