@@ -12,7 +12,6 @@ namespace Logic
   public class LevelLoader : ILevelLoader
   {
     private const string ParentName = "Map";
-    public event Action Complete;
 
     private readonly IColorBoxFactory _boxFactory;
     private readonly ISVGParser _parser;
@@ -48,8 +47,6 @@ namespace Logic
       
       CreateImage(renderer.gameObject);
       SetTransform(renderer);
-      
-      Complete?.Invoke();
     }
 
     private void Cleanup()

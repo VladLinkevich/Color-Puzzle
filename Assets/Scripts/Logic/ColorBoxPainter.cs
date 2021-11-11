@@ -6,35 +6,31 @@ using UI;
 
 namespace Logic
 {
-  public class ColorBoxPainter
+  public class ColorBoxPainter : ILevelDataListener
   {
     public event Action ChangeColor;
-    
-    private readonly ILevelLoader _level;
 
     private ColorType _currentColor = ColorType.Green;
     private List<ColorBoxFacade> _boxes;
     private List<ChangeColorButton> _buttons;
-
-    public ColorBoxPainter(ILevelLoader level)
-    {
-      _level = level;
-      _level.Complete += GetLevelData;
-    }
+    
 
     public void SetPaintColor(ColorType color) => 
       _currentColor = color;
 
-    private void GetLevelData()
+    public void GetLevelData(List<ColorBoxFacade> boxes) => 
+      SubscribeOnBoxTouch(boxes);
+
+    public void Cleanup()
     {
-      _level.Complete -= GetLevelData;
-      
-      SubscribeOnBoxTouch();
+      foreach (ColorBoxFacade box in _boxes) 
+        box.GetComponentInChildren<TouchObserver>().Touch -= ChangeBoxColor;
+      _boxes = null;
     }
 
-    private void SubscribeOnBoxTouch()
+    private void SubscribeOnBoxTouch(List<ColorBoxFacade> boxes)
     {
-      _boxes = _level.ColorBoxes;
+      _boxes = boxes;
       foreach (ColorBoxFacade box in _boxes) 
         box.GetComponentInChildren<TouchObserver>().Touch += ChangeBoxColor;
     }
@@ -44,5 +40,5 @@ namespace Logic
       if (trigger.GetComponentInParent<ColorBoxFacade>().ChangeColor(_currentColor))
         ChangeColor?.Invoke();
     }
-  } 
+  }
 }

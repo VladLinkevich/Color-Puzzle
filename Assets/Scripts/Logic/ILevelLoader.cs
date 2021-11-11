@@ -6,7 +6,6 @@ namespace Logic
 {
   public interface ILevelLoader
   {
-    event Action Complete;
     List<ColorBoxFacade> ColorBoxes { get; }
     void LoadLevel(int level);
   }

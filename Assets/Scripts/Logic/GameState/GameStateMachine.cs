@@ -10,7 +10,7 @@ namespace Logic.GameState
     private IExitableState _activeState;
 
     [Inject]
-    public GameStateMachine(
+    public void  Construct(
       StartGameState startState,
       GameLoopState gameLoopState,
       WinState winState)

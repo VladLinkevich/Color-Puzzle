@@ -11,10 +11,10 @@ namespace Installer
     public override void InstallBindings()
     {
       Container.BindInterfacesAndSelfTo<GameBootstrapper>().AsSingle().NonLazy();
+      Container.BindInterfacesAndSelfTo<ColorBoxPainter>().AsSingle().NonLazy();
+      Container.BindInterfacesAndSelfTo<WinObserver>().AsSingle().NonLazy();
 
       Container.Bind<GameStateMachine>().AsSingle();
-      Container.Bind<ColorBoxPainter>().AsSingle().NonLazy();
-      Container.Bind<WinObserver>().AsSingle().NonLazy();
 
       Container.Bind<StartGameState>().AsSingle().NonLazy();
       Container.Bind<GameLoopState>().AsSingle().NonLazy();

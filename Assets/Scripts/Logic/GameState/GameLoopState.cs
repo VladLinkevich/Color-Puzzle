@@ -4,14 +4,25 @@ namespace Logic.GameState
 {
   public class GameLoopState : IState
   {
-    public void Exit()
+    private readonly ILevelDataListener[] _listeners;
+    private readonly ILevelLoader _loader;
+
+    public GameLoopState(ILevelDataListener[] listeners, ILevelLoader loader)
     {
-      throw new NotImplementedException();
+      _listeners = listeners;
+      _loader = loader;
     }
 
     public void Enter()
     {
-      throw new NotImplementedException();
+      foreach (ILevelDataListener listener in _listeners) 
+        listener.GetLevelData(_loader.ColorBoxes);
+    }
+
+    public void Exit()
+    {
+      foreach (ILevelDataListener listener in _listeners) 
+        listener.Cleanup();
     }
   }
 }
